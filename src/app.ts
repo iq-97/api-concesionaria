@@ -9,8 +9,9 @@ import express = require("express");
 import { loadControllers } from "awilix-express";
 import cors from "cors";
 import morgan from "morgan";
-import connect from "../database";
-
+import connect from "./Infrastructure/database";
+import "reflect-metadata";
+import loadContainer from "./container";
 
 const app: express.Application = express();
 
@@ -23,7 +24,9 @@ connect();
 app.use(cors());
 app.use(morgan("dev"));
 
+loadContainer(app);
+
 // // Controllers
-app.use(loadControllers("controllers/*.ts", { cwd: __dirname }));
+app.use(loadControllers("Api/*.Controller.ts", { cwd: __dirname }));
 
 export  {app};
