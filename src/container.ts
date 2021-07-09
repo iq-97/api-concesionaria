@@ -17,6 +17,9 @@ import { PersonaService } from "./App/Persona.service";
 import { UsuarioService } from "./App/Usuario.service";
 import { VehiculoService } from "./App/Vehiculo.service";
 import { ConcesionarioRepository } from "./Infrastructure/Repositories/ConcesionarioRepository";
+import { ReporteRepository } from "./Infrastructure/Repositories/ReporteRepository";
+import { report } from "process";
+import { ReporteService } from "./App/Reporte.service";
 
 export default (app: express.Application): void => {
   const container = createContainer({
@@ -33,6 +36,7 @@ export default (app: express.Application): void => {
     _personaRepository: asClass(PersonaRepository).scoped(),
     _usuarioRepository: asClass(UsuarioRepository).scoped(),
     _vehiculoRepository: asClass(VehiculoRepository).scoped(),
+    _reporteRepository: asClass(ReporteRepository).scoped(),
 
     // services
     _concesionarioService: asClass(ConcesionarioService).scoped(),
@@ -43,6 +47,7 @@ export default (app: express.Application): void => {
     _personaService: asClass(PersonaService).scoped(),
     _usuarioService: asClass(UsuarioService).scoped(),
     _vehiculoService: asClass(VehiculoService).scoped(),
+    _reporteService: asClass(ReporteService).scoped(),
   });
 
   app.use(scopePerRequest(container));

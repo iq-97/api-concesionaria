@@ -10,6 +10,7 @@ describe("Vehiculo CRUD", () => {
     Puertas: 4,
     Traccion: "doble",
     Tipo: "Pickup",
+    Estado: "Activo",
     concesionarioId: 1,
   };
   it("should post Vehiculo", async function () {
@@ -36,11 +37,12 @@ describe("Vehiculo CRUD", () => {
       .put("/api/vehiculos/" + id)
       .set("Content-Type", "application/json")
       .send({
-        Marca: "Marca test Updated",
+        Marca: "Marca test updated",
         Anio: "2000",
         Puertas: 4,
         Traccion: "doble",
         Tipo: "Pickup",
+        Estado: "Activo",
         concesionarioId: 1,
       });
     expect(res.status).to.equal(200);
