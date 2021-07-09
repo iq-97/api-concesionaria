@@ -1,19 +1,19 @@
 import { Request, Response } from "express";
 import { route, GET, POST, PUT, DELETE } from "awilix-express";
-import { MunicipioDto } from "../Domain/Dtos/MunicipioDto";
-import { BaseController } from "../Api/Base.Controller";
-import { MunicipioService } from "../App/Municipio.service";
+import { LocalizadorDto } from "../Domain/Dtos/LocalizadorDto";
+import { BaseController } from "./Base.Controller";
+import { LocalizadorService } from "../App/Localizador.service";
 
-@route("/api/municipios")
+@route("/api/localizadores")
 export class RegisterController extends BaseController {
-  constructor(private readonly _municipioService: MunicipioService) {
+  constructor(private readonly _localizadorService: LocalizadorService) {
     super();
   }
 
   @GET()
   async GetAll(req: Request, res: Response) {
     try {
-      const result = await this._municipioService.all();
+      const result = await this._localizadorService.all();
       if (result)
         res
           .status(200)
@@ -30,11 +30,12 @@ export class RegisterController extends BaseController {
   @POST()
   async Create(req: Request, res: Response) {
     try {
-      const result = await this._municipioService.store({
-        Nombre: req.body.Nombre,
+      const result = await this._localizadorService.store({
+        Localizador: req.body.Localizador,
+        Tipo: req.body.Tipo,
         Estado: req.body.Estado,
-        departamentoId: req.body.departamentoId,
-      } as MunicipioDto);
+        personaId: req.body.personaId,
+      } as LocalizadorDto);
       res
         .status(200)
         .send({ data: result, message: "Register created successfully" });
@@ -48,7 +49,7 @@ export class RegisterController extends BaseController {
   async GetxId(req: Request, res: Response) {
     try {
       const id = Number(req.params.id);
-      const result = await this._municipioService.findById(id);
+      const result = await this._localizadorService.findById(id);
       if (result) {
         res
           .status(200)
@@ -66,7 +67,7 @@ export class RegisterController extends BaseController {
   async DeleteM(req: Request, res: Response) {
     try {
       const id = Number(req.params.id);
-      const result = await this._municipioService.remove(id);
+      const result = await this._localizadorService.remove(id);
       if (result.affected != 0) {
         res
           .status(200)
@@ -84,11 +85,12 @@ export class RegisterController extends BaseController {
   async UpdateM(req: Request, res: Response) {
     try {
       const id = Number(req.params.id);
-      const result = await this._municipioService.update(id, {
-        Nombre: req.body.Nombre,
+      const result = await this._localizadorService.update(id, {
+        Localizador: req.body.Localizador,
+        Tipo: req.body.Tipo,
         Estado: req.body.Estado,
-        departamentoId: req.body.departamentoId,
-      } as MunicipioDto);
+        personaId: req.body.personaId,
+      } as LocalizadorDto);
       if (result.affected != 0) {
         res
           .status(200)

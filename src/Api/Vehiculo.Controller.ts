@@ -1,19 +1,19 @@
 import { Request, Response } from "express";
 import { route, GET, POST, PUT, DELETE } from "awilix-express";
-import { MunicipioDto } from "../Domain/Dtos/MunicipioDto";
-import { BaseController } from "../Api/Base.Controller";
-import { MunicipioService } from "../App/Municipio.service";
+import { VehiculoDto } from "../Domain/Dtos/VehiculoDto";
+import { BaseController } from "./Base.Controller";
+import { VehiculoService } from "../App/Vehiculo.service";
 
-@route("/api/municipios")
+@route("/api/vehiculos")
 export class RegisterController extends BaseController {
-  constructor(private readonly _municipioService: MunicipioService) {
+  constructor(private readonly _vehiculoService: VehiculoService) {
     super();
   }
 
   @GET()
   async GetAll(req: Request, res: Response) {
     try {
-      const result = await this._municipioService.all();
+      const result = await this._vehiculoService.all();
       if (result)
         res
           .status(200)
@@ -30,11 +30,15 @@ export class RegisterController extends BaseController {
   @POST()
   async Create(req: Request, res: Response) {
     try {
-      const result = await this._municipioService.store({
-        Nombre: req.body.Nombre,
+      const result = await this._vehiculoService.store({
+        Marca: req.body.Marca,
+        Anio: req.body.Anio,
+        Puertas: req.body.Puertas,
+        Traccion: req.body.Traccion,
+        Tipo: req.body.Tipo,
         Estado: req.body.Estado,
-        departamentoId: req.body.departamentoId,
-      } as MunicipioDto);
+        concesionarioId: req.body.concesionarioId,
+      } as VehiculoDto);
       res
         .status(200)
         .send({ data: result, message: "Register created successfully" });
@@ -48,7 +52,7 @@ export class RegisterController extends BaseController {
   async GetxId(req: Request, res: Response) {
     try {
       const id = Number(req.params.id);
-      const result = await this._municipioService.findById(id);
+      const result = await this._vehiculoService.findById(id);
       if (result) {
         res
           .status(200)
@@ -66,7 +70,7 @@ export class RegisterController extends BaseController {
   async DeleteM(req: Request, res: Response) {
     try {
       const id = Number(req.params.id);
-      const result = await this._municipioService.remove(id);
+      const result = await this._vehiculoService.remove(id);
       if (result.affected != 0) {
         res
           .status(200)
@@ -84,11 +88,15 @@ export class RegisterController extends BaseController {
   async UpdateM(req: Request, res: Response) {
     try {
       const id = Number(req.params.id);
-      const result = await this._municipioService.update(id, {
-        Nombre: req.body.Nombre,
+      const result = await this._vehiculoService.update(id, {
+        Marca: req.body.Marca,
+        Anio: req.body.Anio,
+        Puertas: req.body.Puertas,
+        Traccion: req.body.Traccion,
+        Tipo: req.body.Tipo,
         Estado: req.body.Estado,
-        departamentoId: req.body.departamentoId,
-      } as MunicipioDto);
+        concesionarioId: req.body.concesionarioId,
+      } as VehiculoDto);
       if (result.affected != 0) {
         res
           .status(200)

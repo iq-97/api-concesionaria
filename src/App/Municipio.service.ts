@@ -1,4 +1,3 @@
-import { getConnection } from "typeorm";
 import { IMunicipioRepository } from "../Infrastructure/Interfaces/IMunicipioRepository";
 import { MunicipioDto } from '../Domain/Dtos/MunicipioDto';
 

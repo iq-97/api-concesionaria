@@ -1,19 +1,19 @@
 import { Request, Response } from "express";
 import { route, GET, POST, PUT, DELETE } from "awilix-express";
-import { MunicipioDto } from "../Domain/Dtos/MunicipioDto";
-import { BaseController } from "../Api/Base.Controller";
-import { MunicipioService } from "../App/Municipio.service";
+import { PersonaDto } from "../Domain/Dtos/PersonaDto";
+import { BaseController } from "./Base.Controller";
+import { PersonaService } from "../App/Persona.service";
 
-@route("/api/municipios")
+@route("/api/personas")
 export class RegisterController extends BaseController {
-  constructor(private readonly _municipioService: MunicipioService) {
+  constructor(private readonly _personaService: PersonaService) {
     super();
   }
 
   @GET()
   async GetAll(req: Request, res: Response) {
     try {
-      const result = await this._municipioService.all();
+      const result = await this._personaService.all();
       if (result)
         res
           .status(200)
@@ -30,11 +30,13 @@ export class RegisterController extends BaseController {
   @POST()
   async Create(req: Request, res: Response) {
     try {
-      const result = await this._municipioService.store({
-        Nombre: req.body.Nombre,
+      const result = await this._personaService.store({
+        Nombres: req.body.Nombres,
+        Apellidos: req.body.Apellidos,
+        Nacimiento: req.body.Nacimiento,
         Estado: req.body.Estado,
-        departamentoId: req.body.departamentoId,
-      } as MunicipioDto);
+        municipioId: req.body.municipioId,
+      } as PersonaDto);
       res
         .status(200)
         .send({ data: result, message: "Register created successfully" });
@@ -48,7 +50,7 @@ export class RegisterController extends BaseController {
   async GetxId(req: Request, res: Response) {
     try {
       const id = Number(req.params.id);
-      const result = await this._municipioService.findById(id);
+      const result = await this._personaService.findById(id);
       if (result) {
         res
           .status(200)
@@ -66,7 +68,7 @@ export class RegisterController extends BaseController {
   async DeleteM(req: Request, res: Response) {
     try {
       const id = Number(req.params.id);
-      const result = await this._municipioService.remove(id);
+      const result = await this._personaService.remove(id);
       if (result.affected != 0) {
         res
           .status(200)
@@ -84,11 +86,13 @@ export class RegisterController extends BaseController {
   async UpdateM(req: Request, res: Response) {
     try {
       const id = Number(req.params.id);
-      const result = await this._municipioService.update(id, {
-        Nombre: req.body.Nombre,
+      const result = await this._personaService.update(id, {
+        Nombres: req.body.Nombres,
+        Apellidos: req.body.Apellidos,
+        Nacimiento: req.body.Nacimiento,
         Estado: req.body.Estado,
-        departamentoId: req.body.departamentoId,
-      } as MunicipioDto);
+        municipioId: req.body.municipioId,
+      } as PersonaDto);
       if (result.affected != 0) {
         res
           .status(200)
