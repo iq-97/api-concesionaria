@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { ApplicationException } from "../Domain/Exceptions/application.exception"
+import { ApplicationException } from "../Domain/Exceptions/Application.exception"
 
 export abstract class BaseController {
   handleException(err: any, res: Response) {
