@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  concecionario-img-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: concecionario-img-dev
+    container_name: concecionario-cont-dev
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "${PORT}:${PORT}"
